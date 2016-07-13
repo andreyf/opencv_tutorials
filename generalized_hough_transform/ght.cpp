@@ -1,4 +1,3 @@
-//#include "../precomp.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/highgui/highgui.hpp"
 
@@ -157,7 +156,7 @@ public:
 					float a = atan2((float)vy, (float)vx);              //	gradient angle in radians
 					float phi = ((a > 0) ? a-pi_half : a+pi_half);      // contour angle with respect to x axis
 					int angleindex = (int)((phi+pi*0.5f)*inv_deltaphi); // index associated with angle (0 index = -90 degrees)
-					if (angleindex == intervals) angleindex=intervals-1;// -90°angle and +90° has same effect
+					if (angleindex == intervals) angleindex=intervals-1;// -90ï¿½angle and +90ï¿½ has same effect
 					rpt.phiindex = angleindex;
 					pts2.push_back( rpt );
 				}
