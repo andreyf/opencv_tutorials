@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 2.8.12)
+project(ght)
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+add_executable(ght ght.cpp)
+target_link_libraries(ght ${OpenCV_LIBS})
