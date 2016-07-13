@@ -38,7 +38,7 @@ int main()
     // Find total markers
     std::vector<std::vector<cv::Point> > contours;
     cv::findContours(dist_8u, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
-    int ncomp = contours.size();
+    int ncomp = (int) contours.size();
 
     // Create the marker image for the watershed algorithm
     cv::Mat markers = cv::Mat::zeros(dist.size(), CV_32SC1);
@@ -58,11 +58,11 @@ int main()
     std::vector<cv::Vec3b> colors;
     for (int i = 0; i < ncomp; i++)
     {
-	int b = cv::theRNG().uniform(0, 255);
-	int g = cv::theRNG().uniform(0, 255);
-	int r = cv::theRNG().uniform(0, 255);
+	    int b = cv::theRNG().uniform(0, 255);
+	    int g = cv::theRNG().uniform(0, 255);
+	    int r = cv::theRNG().uniform(0, 255);
 
-	colors.push_back(cv::Vec3b((uchar)b, (uchar)g, (uchar)r));
+	    colors.push_back(cv::Vec3b((uchar)b, (uchar)g, (uchar)r));
     }
 
     // Create the result image
@@ -74,10 +74,7 @@ int main()
 	for (int j = 0; j < markers.cols; j++)
 	{
 	    int index = markers.at<int>(i,j);
-	    if (index > 0 && index <= ncomp)
-		dst.at<cv::Vec3b>(i,j) = colors[index-1];
-	    else
-		dst.at<cv::Vec3b>(i,j) = cv::Vec3b(0,0,0);
+        dst.at<cv::Vec3b>(i,j) = index > 0 && index <= ncomp ? colors[index - 1] : cv::Vec3b(0, 0, 0);
 	}
     }
 

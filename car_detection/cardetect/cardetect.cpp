@@ -3,15 +3,9 @@
 #include "opencv2/videoio.hpp"
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
-#include "opencv2/core/utility.hpp"
 
-#include "opencv2/videoio/videoio_c.h"
-#include "opencv2/highgui/highgui_c.h"
-
-#include <cctype>
 #include <iostream>
 #include <iterator>
-#include <stdio.h>
 
 using namespace std;
 using namespace cv;
@@ -239,7 +233,7 @@ void detectAndDraw( Mat& img, CascadeClassifier& cascade,
         }
     }
     t = (double)cvGetTickCount() - t;
-    printf( "detection time = %g ms\n", t/((double)cvGetTickFrequency()*1000.) );
+    printf( "detection time = %g ms\n", t/(cvGetTickFrequency() * 1000.) );
     for( vector<Rect>::const_iterator r = faces.begin(); r != faces.end(); r++, i++ )
     {
         Mat smallImgROI;
