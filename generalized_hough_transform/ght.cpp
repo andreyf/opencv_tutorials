@@ -101,14 +101,14 @@ public:
 
 	// save file with canny edge of the original image
 	void createTemplate(){
-		Mat input_img = imread("files\\template_original.jpg", 1);
+		Mat input_img = imread("files/template_original.jpg", 1);
 		Mat src_gray;
 		Mat detected_edges;
 		src_gray.create( Size(input_img.cols, input_img.rows), CV_8UC1);
 		cvtColor(input_img, src_gray, CV_BGR2GRAY); 
 		blur( src_gray, detected_edges, Size(3,3) );
 		Canny( detected_edges, detected_edges, 1, 100, 3 );
-		imwrite("files\\contour_rough.bmp", detected_edges);
+		imwrite("files/contour_rough.bmp", detected_edges);
 	}
 
 	void createRtable(){
@@ -244,7 +244,7 @@ public:
 		float wratio = (float)w/(wtemplate);	
 		for (std::vector<std::vector<Vec2i> >::size_type ii = 0; ii < Rtable.size(); ++ii){
 			for (std::vector<Vec2i>::size_type jj= 0; jj < Rtable[ii].size(); ++jj){
-				int iimod = (ii+reff) % intervals;
+//				int iimod = (ii+reff) % intervals;
 				int dx = roundToInt(wratio*(cs*Rtable[ii][jj][0] - sn*Rtable[ii][jj][1]));
 				int dy = roundToInt(wratio*(sn*Rtable[ii][jj][0] + cs*Rtable[ii][jj][1]));
 				int x = referenceP[0] - dx;
@@ -284,12 +284,12 @@ private:
 	// load vector pts with all points from the contour
 	void readPoints(){
 		// read original template image and its worked-out contour
-		Mat original_img = imread("files\\template_original.jpg", 1);
+		Mat original_img = imread("files/template_original.jpg", 1);
 		Mat input_img_gray;
 		input_img_gray.create( Size(original_img.cols, original_img.rows), CV_8UC1);
 		cvtColor(original_img, input_img_gray, CV_BGR2GRAY); 
 	    //Mat template_img = imread("files\\contour_def.bmp", 1);
-	    Mat template_img = imread("files\\contour_def2.bmp", 1);
+	    Mat template_img = imread("files/contour_def2.bmp", 1);
 		// find reference point inside contour image and save it in variable refPoint
 		int nl= template_img.rows;
 		int nc= template_img.cols; 
@@ -382,7 +382,7 @@ void runGHT(char c){
 		//ght.setTresholds(180, 250);
 		ght.createRtable();
 		//Mat detect_img = imread("files\\Img_01.png", 1);
-		Mat detect_img = imread("files\\Img_02.png", 1);
+		Mat detect_img = imread("files/Img_02.png", 1);
 		//Mat detect_img = imread("files\\Img_03.png", 1);
 		ght.accumulate(detect_img);
 		ght.bestCandidate();
@@ -391,5 +391,5 @@ void runGHT(char c){
 
 int main (int argc, char *argv[])
 {
-    runGHT('t');
+    runGHT('r');
 }
