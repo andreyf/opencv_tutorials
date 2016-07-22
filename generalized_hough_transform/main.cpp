@@ -17,9 +17,9 @@ void runGHT(char c) {
         GHT ght;
         //ght.setTresholds(180, 250);
         ght.createRtable();
-        //Mat detect_img = imread("files\\Img_01.png", 1);
-        Mat detect_img = imread("files/Img_03.png", 1);
-        //Mat detect_img = imread("files\\Img_03.png", 1);
+
+        Mat detect_img = imread("files/Img_01.png", 1);
+
         ght.accumulate(detect_img);
         ght.bestCandidate();
     }
@@ -27,6 +27,6 @@ void runGHT(char c) {
 
 int main (int argc, char *argv[])
 {
+    runGHT('t');
     runGHT('r');
 }
-
