@@ -11,4 +11,5 @@ add_subdirectory ( opencv_filters/gaussian_smoothing_filter )
 add_subdirectory ( opencv_filters/homogeneous_smoothing_filter )
 add_subdirectory ( opencv_filters/median_filter )
 add_subdirectory ( blobdetector )
+add_subdirectory ( rgbtogray )
 
