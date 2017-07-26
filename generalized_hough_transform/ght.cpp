@@ -108,7 +108,7 @@ void GHT::bestCandidate() {
 
 	// rotate and scale points all at once. Then impress them on image
     float deltaphi = pi/intervals;
-	int r0 = -floor(phimin/deltaphi);
+	int r0 = static_cast<int>(-floor(phimin / deltaphi));
 	int reff = id_max[3]-r0;
 	float cs = cos(reff*deltaphi);
 	float sn = sin(reff*deltaphi);
@@ -196,12 +196,12 @@ void GHT::accumulate(cv::Mat& input_img) {
 
 	// OpenCv 4-dimensional matrix definition and in general a useful way for defining multidimensional arrays and vectors in c++
 	// create accumulator matrix
-	int X = ceil((float)nc/rangeXY);
-	int Y = ceil((float)nl/rangeXY);
-	int S = ceil((float)(wmax-wmin)/rangeS+1.0f);
-	int R = ceil(phimax/deltaphi)-floor(phimin/deltaphi);
+	int X = static_cast<int>(ceil((float)nc / rangeXY));
+	int Y = static_cast<int>(ceil((float)nl / rangeXY));
+	int S = static_cast<int>(ceil((float)(wmax - wmin) / rangeS + 1.0f));
+	int R = static_cast<int>(ceil(phimax / deltaphi) - floor(phimin / deltaphi));
 	if (phimax==pi && phimin==-pi) R--;
-	int r0 = -floor(phimin/deltaphi);
+	int r0 = static_cast<int>(-floor(phimin / deltaphi));
 	int matSizep_S[] = {X, Y, S, R};
 	accum.create(4, matSizep_S, CV_16S);
 	accum = Scalar::all(0);
@@ -215,8 +215,8 @@ void GHT::accumulate(cv::Mat& input_img) {
 		std::vector<std::vector<Vec2f> > Rtablerotated((unsigned long) intervals);
 
 		// cos and sin are computed in the outer loop to reach computational efficiency
-		float cs = cos(reff*deltaphi);
-		float sn = sin(reff*deltaphi);
+		float cs = std::cos(reff*deltaphi);
+		float sn = std::sin(reff*deltaphi);
 		for (std::vector<std::vector<Vec2i> >::size_type ii = 0; ii < Rtable.size(); ++ii){
 			for (std::vector<Vec2i>::size_type jj= 0; jj < Rtable[ii].size(); ++jj){
 				int iimod = (int) ((ii + reff) % intervals);

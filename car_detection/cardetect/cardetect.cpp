@@ -1,11 +1,6 @@
-#include "opencv2/objdetect.hpp"
-#include "opencv2/imgcodecs.hpp"
-#include "opencv2/videoio.hpp"
-#include "opencv2/highgui.hpp"
-#include "opencv2/imgproc.hpp"
-
 #include <iostream>
-#include <iterator>
+#include <highgui.h>
+#include <cv.h>
 
 using namespace std;
 using namespace cv;
@@ -35,7 +30,7 @@ string nestedCascadeName = "../../data/haarcascades/haarcascade_eye_tree_eyeglas
 
 int main( int argc, const char** argv )
 {
-    CvCapture* capture = 0;
+    CvCapture* capture = nullptr;
     Mat frame, frameCopy, image;
     const string scaleOpt = "--scale=";
     size_t scaleOptLen = scaleOpt.length();
@@ -98,7 +93,7 @@ int main( int argc, const char** argv )
     {
         capture = cvCaptureFromCAM( inputName.empty() ? 0 : inputName.c_str()[0] - '0' );
         int c = inputName.empty() ? 0 : inputName.c_str()[0] - '0' ;
-        if(!capture) cout << "Capture from CAM " <<  c << " didn't work" << endl;
+        if(capture == nullptr) cout << "Capture from CAM " <<  c << " didn't work" << endl;
     }
     else if( inputName.size() )
     {
@@ -106,7 +101,7 @@ int main( int argc, const char** argv )
         if( image.empty() )
         {
             capture = cvCaptureFromAVI( inputName.c_str() );
-            if(!capture) cout << "Capture from AVI didn't work" << endl;
+            if(capture == nullptr) cout << "Capture from AVI didn't work" << endl;
         }
     }
     else
@@ -117,7 +112,7 @@ int main( int argc, const char** argv )
 
     cvNamedWindow( "result", 1 );
 
-    if( capture )
+    if( capture != nullptr)
     {
         cout << "In capture ..." << endl;
         for(;;)
@@ -155,13 +150,13 @@ _cleanup_:
             /* assume it is a text file containing the
             list of the image filenames to be processed - one per line */
             FILE* f = fopen( inputName.c_str(), "rt" );
-            if( f )
+            if( f != nullptr)
             {
                 char buf[1000+1];
-                while( fgets( buf, 1000, f ) )
+                while( fgets( buf, 1000, f ) != nullptr)
                 {
                     int len = (int)strlen(buf), c;
-                    while( len > 0 && isspace(buf[len-1]) )
+                    while( len > 0 && (isspace(buf[len-1]) != 0))
                         len--;
                     buf[len] = '\0';
                     cout << "file " << buf << endl;

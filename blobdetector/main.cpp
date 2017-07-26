@@ -36,11 +36,22 @@ int main( int argc, char** argv )
 	// Storage for blobs
 	vector<KeyPoint> keypoints;
 
+
+#if CV_MAJOR_VERSION < 3   // If you are using OpenCV 2
+
 	// Set up detector with params
-	Ptr<SimpleBlobDetector> detector = SimpleBlobDetector::create(params);   
+	SimpleBlobDetector detector(params);
+
+	// Detect blobs
+	detector.detect( im, keypoints);
+#else
+
+	// Set up detector with params
+	Ptr<SimpleBlobDetector> detector = SimpleBlobDetector::create(params);
 
 	// Detect blobs
 	detector->detect( im, keypoints);
+#endif
 
 	// Draw detected blobs as red circles.
 	// DrawMatchesFlags::DRAW_RICH_KEYPOINTS flag ensures
@@ -54,4 +65,3 @@ int main( int argc, char** argv )
 	waitKey(0);
 
 }
-
