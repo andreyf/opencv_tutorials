@@ -1,52 +1,66 @@
-#include "cv.h"
-#include <opencv2/opencv.hpp>
+#include <cv.h>
+#include <highgui.h>
 
 using namespace cv;
-using namespace std;
 
 int main() {
-
-    // read in the apple (change path to the file)
+    // Read the image (EN)
+    // Читаем изображение (RU)
     Mat img0 = imread("apple.jpg", 1);
 
     Mat img1;
+
+    // RGB to GRAY (EN)
+    // Преобразуем RGB изображение в оттенки серого (RU)
     cvtColor(img0, img1, CV_RGB2GRAY);
 
-    // apply your filter
+    // Apply Canny filter (EN)
+    // Применяем фильтр Canny (RU)
     Canny(img1, img1, 100, 200);
 
-    // find the contours
+    // Find contours (EN)
+    // Находим контуры (RU)
     vector< vector<Point> > contours;
     findContours(img1, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);
 
-    // you could also reuse img1 here
+    // Create mask (EN)
+    // Создаем маску (RU)
     Mat mask = Mat::zeros(img1.rows, img1.cols, CV_8UC1);
 
-    // CV_FILLED fills the connected components found
+    // CV_FILLED fills the connected components found (EN)
+    // CV_FILLED заполняет найденные компоненты (RU)
     drawContours(mask, contours, -1, Scalar(255), CV_FILLED);
 
-    // let's create a new image now
+    // Create a new image (EN)
+    // Создаем еще одно изображение (RU)
     Mat crop(img0.rows, img0.cols, CV_8UC3);
 
-    // set background to green
+    // Set background to green (EN)
+    // Делаем задний фон зеленым (RU)
     crop.setTo(Scalar(0,255,0));
 
-    // and copy the magic apple
+    // Create the result image (EN)
+    // Создаем результирующее изображение (RU)
     img0.copyTo(crop, mask);
 
-    // normalize so imwrite(...)/imshow(...) shows the mask correctly!
+    // Normalize the mask image (EN)
+    // Нормализуем маску (RU)
     normalize(mask.clone(), mask, 0.0, 255.0, CV_MINMAX, CV_8UC1);
 
-    // show the images
+    // Show images (EN)
+    // Показываем изображения (RU)
     imshow("original", img0);
     imshow("mask", mask);
     imshow("canny", img1);
     imshow("cropped", crop);
 
+    // Save images (EN)
+    // Сохраняем изображения (RU)
     imwrite("apple_canny.jpg", img1);
     imwrite("apple_mask.jpg", mask);
     imwrite("apple_cropped.jpg", crop);
 
-    waitKey();
+    waitKey(0);
+
     return 0;
 }
